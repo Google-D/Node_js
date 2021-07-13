@@ -6,6 +6,9 @@
 	<script type="text/javascript">
 		function submit(){
 		      var q=document.getElementById("cbox").value;
+			if(q == ""){
+                           document.getElementById("txtHint1").innerHTML = "Please enter command.." ;
+                          }else{
 		      //alert(q);
 		      var xmlhttp = new XMLHttpRequest();
 		      xmlhttp.onreadystatechange = function() {
@@ -27,8 +30,8 @@
 		      xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		     // xmlhttp.send("data="+q);
 		     xmlhttp.send("name1="+q);
-
-			}
+	            }	
+		}
 
 
 
