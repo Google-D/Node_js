@@ -12,11 +12,15 @@
 		      if(this.status == 0){
 			  document.getElementById("txtHint").innerHTML = "<font Color='red'>Please Wait ...</font>";
 			  document.getElementById("but").disabled = true;
-			}
+			}else{
+              		 document.getElementById("but").disabled = false;
+                  	 document.getElementById("cbox").value="";
+              	        }
 			document.getElementById("txtHint1").innerHTML = "Connection Status: "+this.status ;
 			if (this.readyState == 4 && this.status == 200) {
 			  document.getElementById("txtHint").innerHTML = this.responseText;
 			  document.getElementById("but").disabled = false;
+			  document.getElementById("cbox").value="";
 			}
 		      };
 		      xmlhttp.open("POST", "/getdata", true);
