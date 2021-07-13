@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Terminal</title>
+	<script type="text/javascript">
+		function submit(){
+
+
+			  var q=document.getElementById("cbox").value;
+			  //alert(q);
+              var xmlhttp = new XMLHttpRequest();
+              xmlhttp.onreadystatechange = function() {
+              	if(this.status == 0){
+              	  document.getElementById("txtHint").innerHTML = "<font Color='red'>Please Wait ...</font>";
+              	  document.getElementById("but").disabled = true;
+              	}
+              	document.getElementById("txtHint1").innerHTML = "Connection Status: "+this.status ;
+              	
+              	
+                if (this.readyState == 4 && this.status == 200) {
+                  document.getElementById("txtHint").innerHTML = this.responseText;
+                  document.getElementById("but").disabled = false;
+                }
+              };
+              xmlhttp.open("POST", "/getdata", true);
+              xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+             // xmlhttp.send("data="+q);
+             xmlhttp.send("name1="+q);
+
+		}
+
+
+
+	</script>
+</head>
+<body>
+
+<input type="text" name="command" id="cbox" placeholder="Enter command hear...."> 
+<input type="button" name="submit" id="but" value="Submit" onclick="submit()">
+<br><br>
+<span id="txtHint1"> </span>
+<br>
+<span id="txtHint"> </span>
+</body>
+</html>
