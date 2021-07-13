@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Dy-Terminal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<style type="text/css">
+  
+@import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
+
+body {
+  background: linear-gradient(45deg, #57003f 0%,#f57453 100%);
+  font-family: 'Ubuntu';
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+}
+.Terminal {
+  width: 800px;
+  height: 500px;
+  box-shadow: 2px 4px 10px rgba(0,0,0,.5);
+}
+
+.Terminal__Toolbar {
+  background: linear-gradient(#504b45 0%,#3c3b37 100%);
+  width: 100%;
+  padding: 0 8px;
+  box-sizing: border-box;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.Toolbar__buttons {
+  display: flex;
+  align-items: center;
+}
+
+.Toolbar__button {
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  padding: 0;
+  font-size: 7px;
+  background: linear-gradient(#7d7871 0%, #595953 100%);
+  text-shadow: 0px 1px 0px rgba(255,255,255,0.2);
+  box-shadow: 0px 0px 1px 0px #41403A,0px 1px 1px 0px #474642;
+  border: none;
+  margin-right: 4px;
+
+}
+.Toolbar__button:hover {
+  cursor: pointer;
+}
+.Toolbar__button--exit {
+  background: #f25d2b;
+  background: linear-gradient(#f37458 0%, #de4c12 100%);
+  background-clip: padding-box;
+}
+.Toolbar__button:focus {
+  outline: none;
+}
+
+.Toolbar__user {
+  color: #d5d0ce;
+  margin-left: 4px;
+  font-size: 12px;
+  line-height: 14px;
+  margin-bottom: 1px;
+}
+.Terminal__body {
+  background: rgba(56, 4, 40, .9);
+  height: calc(100% - 25px);
+  margin-top: -1px;
+  padding-top: 2px;
+  font-family: 'Ubuntu mono';
+}
+.Terminal__text {
+  color: #ddd;
+}
+
+.Terminal__Prompt {
+  margin-top: 10px;
+  display: flex;
+}
+
+.Prompt__user {
+  color: #87d441;
+}
+.Prompt__location {
+  color: #6d85a9;
+}
+.Prompt__dollar {
+  color: #ddd;
+}
+.Prompt__cursor {
+  height: 17px;
+  width: 8px;
+  background: white;
+  display: block;
+  margin-left: 8px;
+  animation: 2000ms ease infinite alternate blink;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .Terminal {
+    max-height: 90%;
+    width: 95%;
+  }
+}
+
+</style>
+<style type="text/css">
+  .ter{
+    background-color: transparent;
+    border: none;
+    color: white;
+    outline: none;
+    display: inline;
+    width: 100%;
+    font-size: 15px;
+  }
+
+  .aa{color: white;}
+ 
+ .dy_scrool{overflow-y: scroll;}
+
+ .dy_scrool::-webkit-scrollbar {width: 5px;}
+
+.dy_scrool::-webkit-scrollbar-track {background: transparent;}
+
+.dy_scrool::-webkit-scrollbar-thumb {
+  background-color: transparent; 
+  border-radius: 15px;      
+  border: 2px solid green;  
+}
+.dd{
+  color: lightgreen;
+  font-size: 12px;
+}
+
+</style>
+<script type="text/javascript">
+    function submit(){
+        var q=document.getElementById("cbox").value;
+        if(q == ""){
+           document.getElementById("txtHint1").innerHTML = "Please enter command.." ;
+        }else{
+        //alert(q);
+              var xmlhttp = new XMLHttpRequest();
+              xmlhttp.onreadystatechange = function() {
+                if(this.status == 0){
+                  document.getElementById("txtHint").innerHTML = "<font Color='red'>Please Wait ...</font>";
+                  document.getElementById("but").disabled = true;
+                }else{
+                   document.getElementById("but").disabled = false;
+                  document.getElementById("cbox").value="";
+                }
+                document.getElementById("txtHint1").innerHTML = "Connection Status: "+this.status ;
+                
+                if (this.readyState == 4 && this.status == 200) {
+                  document.getElementById("txtHint").innerHTML = this.responseText;
+                  document.getElementById("but").disabled = false;
+                  document.getElementById("cbox").value="";
+                }
+              };
+              xmlhttp.open("POST", "/getdata", true);
+              xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+             // xmlhttp.send("data="+q);
+             xmlhttp.send("name1="+q);
+          }
+
+    }
+
+  </script>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="container">
+  <div class="Terminal">
+    <div class="Terminal__Toolbar">
+      <p class="dd">Dy@server> </p>
+    <input type="text" class="ter" id="cbox" placeholder="Enter command here....">
+    <input type="submit" value="Run" id="but" onclick="submit()" >
+    </div>
+    <div class="Terminal__body dy_scrool">
+      <div class="Terminal__text">Welcome to @Dy-Server</div>
+      <div class="Terminal__text" id="txtHint1"></div> 
+      <div class="Terminal__Prompt" id="txtHint">
+        <!--Command output -->
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- partial -->
+  
+</body>
+</html>
